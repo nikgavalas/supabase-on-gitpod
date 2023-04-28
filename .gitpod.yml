@@ -8,7 +8,15 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - init: npm install && npm run supabase:start
+  - name: Dependencies & Database
+    init: |
+      (
+        set -e
+        npm install 
+        npm run supabase:start
+        SUPABASE_ANON_KEY=$(supabase status -o env | sed -n 's/^ANON_KEY=//p' | tr -d '"')
+      )
     env:
-      SUPABASE_ACCESS_TOKEN: $SUPABASE_TOKEN_PERSONAL
+      SUPABASE_ACCESS_TOKEN: $SUPABASE_TOKEN_PERSONAL # Update this to the name of the token you created in the gitpod user settings.
+      SUPABASE_API_URL: http://localhost:54321 # Always the same for dev
     command: npm run dev
