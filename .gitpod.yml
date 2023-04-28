@@ -8,7 +8,7 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - init: npm install
+  - init: npm install && npm run supabase:start
     env:
       SUPABASE_ACCESS_TOKEN: $SUPABASE_TOKEN_PERSONAL
-    command: npm run supabase:start
+    command: npm run dev
