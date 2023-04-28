@@ -4,8 +4,11 @@
 
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
 
+image:
+  file: .gitpod.Dockerfile
+
 tasks:
-  - init: npm install && npm run build
-    command: npm run start
-
-
+  - init: npm install
+    env:
+      SUPABASE_ACCESS_TOKEN: $SUPABASE_TOKEN_PERSONAL
+    command: npm run supabase:start
