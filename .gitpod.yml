@@ -16,8 +16,8 @@ tasks:
         npm run supabase:start
         supabase status -o env | sed 's/^/SUPABASE_/' > .env
         SUPABASE_DB_URL="$(supabase status -o env | sed -n 's/^DB_URL=//p' | tr -d '"')"
-        SUPABASE_DIRECT_URL=$(echo "$SUPABASE_DB_URL" | sed "s/:54322/:6543/g")"?pgbouncer=true"
-        printf "SUPABASE_DIRECT_URL=\"$SUPABASE_DIRECT_URL\"\n" >> .env
+        SUPABASE_POOLING_URL=$(echo "$SUPABASE_DB_URL" | sed "s/:54322/:6543/g")"?pgbouncer=true"
+        printf "SUPABASE_POOLING_URL=\"$SUPABASE_POOLING_URL\"\n" >> .env
         gp sync-done setup
       )
     env:
