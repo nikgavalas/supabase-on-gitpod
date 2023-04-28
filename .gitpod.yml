@@ -14,10 +14,14 @@ tasks:
         set -e
         npm install 
         npm run supabase:start
+        export SUPABASE_API_URL="$(supabase status -o env | sed -n 's/^API_URL=//p' | tr -d '"')"
         export SUPABASE_ANON_KEY="$(supabase status -o env | sed -n 's/^ANON_KEY=//p' | tr -d '"')"
-        echo "$SUPABASE_ANON_KEY"
+        printf "SUPABASE_API_URL=\"$SUPABASE_API_URL\"\nSUPABASE_ANON_KEY=\"$SUPABASE_ANON_KEY\"" > .env.local
+        gp sync-done setup
       )
     env:
       SUPABASE_ACCESS_TOKEN: $SUPABASE_TOKEN_PERSONAL # Update this to the name of the token you created in the gitpod user settings.
-      SUPABASE_API_URL: http://localhost:54321 # Always the same for dev
+
+  - name: Webserver
+    init: gp sync-await setup
     command: npm run dev
