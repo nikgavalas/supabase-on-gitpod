@@ -40,11 +40,11 @@ tasks:
 
   - name: Webserver
     init: gp ports await 54322 # Wait for supabase to be ready
-    command: npm run dev
+    command: npm run supabase:wait-for-start && npm run dev
 
   - name: Prisma
     init: gp ports await 54322 # Wait for supabase to be ready
-    command: npm run prisma:seed && npm run prisma:studio
+    command: npm run supabase:wait-for-start && npm run prisma:seed && npm run prisma:studio
 
 # List the ports to expose. Learn more: https://www.gitpod.io/docs/configure/workspaces/ports
 ports:

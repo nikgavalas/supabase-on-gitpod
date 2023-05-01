@@ -9,6 +9,7 @@
     "lint": "next lint",
     "supabase:start": "supabase start",
     "supabase:stop": "supabase stop",
+    "supabase:wait-for-start": "./scripts/wait-supabase.sh",
     "prisma:seed": "prisma migrate reset --force",
     "prisma:studio": "prisma studio"
   },
@@ -22,6 +23,7 @@
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.1",
     "autoprefixer": "10.4.14",
+    "dotenv": "^16.0.3",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.1",
     "next": "13.3.1",
