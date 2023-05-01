@@ -9,14 +9,14 @@ image:
 
 tasks:
   - name: Dependencies & Database
-    # This is what I had before but connection pooling doesn't work locally. 
+    # This is what I had before but connection pooling doesn't work locally.
     # Keeping this here for now in case I need to reference it later and setup
     # connection pooling once supabase supports it locally.
     # https://github.com/supabase/cli/issues/316
     # init: |
     #   (
     #     set -e
-    #     npm install 
+    #     npm install
     #     npm run supabase:start
     #     supabase status -o env | sed 's/^/SUPABASE_/' > .env
     #     SUPABASE_DB_URL="$(supabase status -o env | sed -n 's/^DB_URL=//p' | tr -d '"')"
@@ -44,10 +44,8 @@ tasks:
     command: npm run dev
 
   - name: Prisma
-    init: |
-      - gp sync-await setup
-      - npm run prisma:seed
-    command: npm run prisma:studio
+    init: gp sync-await setup
+    command: npm run prisma:seed && npm run prisma:studio
 
 # List the ports to expose. Learn more: https://www.gitpod.io/docs/configure/workspaces/ports
 ports:
