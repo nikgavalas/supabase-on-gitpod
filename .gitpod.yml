@@ -33,10 +33,11 @@ tasks:
         supabase status -o env | sed 's/^/SUPABASE_/' > .env
         SUPABASE_DB_URL="$(supabase status -o env | sed -n 's/^DB_URL=//p' | tr -d '"')"
         printf "SUPABASE_POOLING_URL=\"$SUPABASE_DB_URL\"\n" >> .env
+        gp sync-done setup
       )
     env:
       SUPABASE_ACCESS_TOKEN: $SUPABASE_TOKEN_PERSONAL # Update this to the name of the token you created in the gitpod user settings.
-    command: supabase status && gp sync-done setup # Sync needs to happen AFTER the database is running (via supabase status)
+    command: supabase status
 
   - name: Webserver
     init: gp sync-await setup
@@ -44,7 +45,7 @@ tasks:
 
   - name: Prisma
     init: gp sync-await setup
-    command: npm run prisma:seed && npm run prisma:studio
+    command: supabase status && npm run prisma:seed && npm run prisma:studio
 
 # List the ports to expose. Learn more: https://www.gitpod.io/docs/configure/workspaces/ports
 ports:
