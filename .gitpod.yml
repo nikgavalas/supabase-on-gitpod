@@ -9,6 +9,22 @@ image:
 
 tasks:
   - name: Dependencies & Database
+    # This is what I had before but connection pooling doesn't work locally.
+    # Keeping this here for now in case I need to reference it later and setup
+    # connection pooling once supabase supports it locally.
+    # https://github.com/supabase/cli/issues/316
+    # init: |
+    #   (
+    #     set -e
+    #     npm install
+    #     npm run supabase:start
+    #     supabase status -o env | sed 's/^/SUPABASE_/' > .env
+    #     SUPABASE_DB_URL="$(supabase status -o env | sed -n 's/^DB_URL=//p' | tr -d '"')"
+    #     SUPABASE_POOLING_URL=$(echo "$SUPABASE_DB_URL" | sed "s/:54322/:6543/g")"?pgbouncer=true"
+    #     printf "SUPABASE_POOLING_URL=\"$SUPABASE_POOLING_URL\"\n" >> .env
+    #     gp sync-done setup
+    #   )
+
     init: |
       (
         set -e
@@ -16,14 +32,48 @@ tasks:
         npm run supabase:start
         supabase status -o env | sed 's/^/SUPABASE_/' > .env
         SUPABASE_DB_URL="$(supabase status -o env | sed -n 's/^DB_URL=//p' | tr -d '"')"
-        SUPABASE_DIRECT_URL=$(echo "$SUPABASE_DB_URL" | sed "s/:54322/:6543/g")"?pgbouncer=true"
-        printf "SUPABASE_DIRECT_URL=\"$SUPABASE_DIRECT_URL\"\n" >> .env
-        gp sync-done setup
+        printf "SUPABASE_POOLING_URL=\"$SUPABASE_DB_URL\"\n" >> .env
       )
     env:
       SUPABASE_ACCESS_TOKEN: $SUPABASE_TOKEN_PERSONAL # Update this to the name of the token you created in the gitpod user settings.
     command: supabase status
 
   - name: Webserver
-    init: gp sync-await setup
-    command: npm run dev
+    init: gp ports await 54322 # Wait for supabase to be ready
+    command: npm run supabase:wait-for-start && npm run dev
+
+  - name: Prisma
+    init: gp ports await 54322 # Wait for supabase to be ready
+    command: npm run supabase:wait-for-start && npm run prisma:seed && npm run prisma:studio
+
+# List the ports to expose. Learn more: https://www.gitpod.io/docs/configure/workspaces/ports
+ports:
+  - name: Frontend
+    description: Port 3000 for the frontend
+    port: 3000
+    onOpen: open-browser
+  - name: Prisma Studio
+    description: Open Prisma Studio
+    port: 5555
+    onOpen: open-browser
+
+vscode:
+  extensions:
+    - stkb.rewrap
+    - SimonSiefke.svg-preview
+    - wayou.vscode-todo-highlight
+    - vscode-icons-team.vscode-icons
+    - chunsen.bracket-select
+    - wmaurer.change-case
+    - streetsidesoftware.code-spell-checker
+    - IronGeek.vscode-env
+    - dbaeumer.vscode-eslint
+    - GitHub.copilot
+    - GitHub.vscode-pull-request-github
+    - eamodio.gitlens
+    - kumar-harsh.graphql-for-vscode
+    - esbenp.prettier-vscode
+    - yoavbls.pretty-ts-errors
+    - Prisma.prisma
+    - jock.svg
+    - bradlc.vscode-tailwindcss

@@ -8,14 +8,22 @@
     "start": "next start",
     "lint": "next lint",
     "supabase:start": "supabase start",
-    "supabase:stop": "supabase stop"
+    "supabase:stop": "supabase stop",
+    "supabase:wait-for-start": "./scripts/wait-supabase.sh",
+    "prisma:seed": "prisma migrate reset --force",
+    "prisma:studio": "prisma studio"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
+    "@prisma/client": "^4.13.0",
     "@supabase/supabase-js": "^2.21.0",
     "@types/node": "18.16.1",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.1",
     "autoprefixer": "10.4.14",
+    "dotenv": "^16.0.3",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.1",
     "next": "13.3.1",
@@ -26,6 +34,8 @@
     "typescript": "5.0.4"
   },
   "devDependencies": {
-    "encoding": "^0.1.13"
+    "encoding": "^0.1.13",
+    "prisma": "^4.13.0",
+    "ts-node": "^10.9.1"
   }
 }
