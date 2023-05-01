@@ -8,7 +8,12 @@
     "start": "next start",
     "lint": "next lint",
     "supabase:start": "supabase start",
-    "supabase:stop": "supabase stop"
+    "supabase:stop": "supabase stop",
+    "prisma:seed": "prisma migrate reset",
+    "prisma:studio": "prisma studio"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^4.13.0",
@@ -28,6 +33,7 @@
   },
   "devDependencies": {
     "encoding": "^0.1.13",
-    "prisma": "^4.13.0"
+    "prisma": "^4.13.0",
+    "ts-node": "^10.9.1"
   }
 }
