@@ -57,3 +57,24 @@ ports:
     description: Open Prisma Studio
     port: 5555
     onOpen: open-browser
+
+vscode:
+  extensions:
+    - stkb.rewrap
+    - SimonSiefke.svg-preview
+    - wayou.vscode-todo-highlight
+    - vscode-icons-team.vscode-icons
+    - chunsen.bracket-select
+    - wmaurer.change-case
+    - streetsidesoftware.code-spell-checker
+    - IronGeek.vscode-env
+    - dbaeumer.vscode-eslint
+    - GitHub.copilot
+    - GitHub.vscode-pull-request-github
+    - eamodio.gitlens
+    - kumar-harsh.graphql-for-vscode
+    - esbenp.prettier-vscode
+    - yoavbls.pretty-ts-errors
+    - Prisma.prisma
+    - jock.svg
+    - bradlc.vscode-tailwindcss

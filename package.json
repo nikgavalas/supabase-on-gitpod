@@ -9,7 +9,7 @@
     "lint": "next lint",
     "supabase:start": "supabase start",
     "supabase:stop": "supabase stop",
-    "prisma:seed": "prisma migrate reset",
+    "prisma:seed": "prisma migrate reset --force",
     "prisma:studio": "prisma studio"
   },
   "prisma": {
